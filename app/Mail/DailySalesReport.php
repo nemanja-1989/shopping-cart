@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
 class DailySalesReport extends Mailable
 {
@@ -27,17 +28,15 @@ class DailySalesReport extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Daily Sales Report',
+            from: new Address('no-reply@example.com', config('app.name')),
+            subject: 'Daily Sales Report'
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'emails.daily-report'
         );
     }
 

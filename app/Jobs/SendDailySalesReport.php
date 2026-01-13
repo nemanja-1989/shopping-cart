@@ -2,26 +2,28 @@
 
 namespace App\Jobs;
 
+use App\Mail\DailySalesReport;
+use App\Models\OrderItem;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class SendDailySalesReport implements ShouldQueue
 {
-    use Queueable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     */
-    public function __construct()
+    public function handle()
     {
-        //
-    }
+        // Get all order items created today
+        $items = OrderItem::whereDate('created_at', today())
+            ->with('product')
+            ->get();
 
-    /**
-     * Execute the job.
-     */
-    public function handle(): void
-    {
-        //
+        // Send to dummy admin
+        Mail::to('admin@example.com')->send(new DailySalesReport($items));
     }
 }
+

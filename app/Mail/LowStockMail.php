@@ -2,32 +2,27 @@
 
 namespace App\Mail;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Models\Product;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
 
 class LowStockMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    public Product $product;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
+    public function __construct(Product $product)
     {
-        //
+        $this->product = $product;
     }
 
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
+     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Low Stock Mail',
+            subject: 'Low Stock Alert'
         );
     }
 
@@ -37,7 +32,7 @@ class LowStockMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'emails.low-stock', // your markdown blade view
         );
     }
 

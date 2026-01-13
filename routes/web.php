@@ -13,3 +13,9 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 require __DIR__.'/auth.php';
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cart', \App\Livewire\CartManager::class)->name('cart');
+});
+Route::get('/', fn()=>redirect('/cart'));
+
