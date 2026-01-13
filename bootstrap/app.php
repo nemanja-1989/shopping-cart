@@ -18,6 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
      ->withSchedule(function (Schedule $schedule) {
-        $schedule->job(new \App\Jobs\SendDailySalesReport)->dailyAt('12:00');
+        $schedule->job(new \App\Jobs\SendDailySalesReport)
+        ->everyMinute();
+        // ->dailyAt('12:00');
     })
     ->create();

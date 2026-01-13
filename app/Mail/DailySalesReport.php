@@ -14,14 +14,12 @@ class DailySalesReport extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+    public $items; // Make it public so Blade can access
 
+    public function __construct($items)
+    {
+        $this->items = $items;
+    }
     /**
      * Get the message envelope.
      */
@@ -36,7 +34,7 @@ class DailySalesReport extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.daily-report'
+            markdown: 'emails.daily-sales'
         );
     }
 

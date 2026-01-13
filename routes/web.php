@@ -17,5 +17,5 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', \App\Livewire\CartManager::class)->name('cart');
 });
-Route::get('/', fn()=>redirect('/cart'));
+Route::get('/', fn()=>redirect('/dashboard'));
 
